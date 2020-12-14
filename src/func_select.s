@@ -1,42 +1,79 @@
 .section	.rodata	#read only data section
 str1:	.string	"l1\n"
-str2:	.string	"l2\n"
-str3:	.string	"l3\n"
-.L50:
-    .quad .L51
+print:  .string "%d\n"
+strplen: .string "first pstring length: %d, second pstring length: %d\n"
+.L40:
+    .quad .L50
+    .quad .L11
     .quad .L52
     .quad .L53
-    .quad .L11
+    .quad .L54
+    .quad .L55
     
     .text
 .globl run_func
     .type run_func, @function
+#### Start Function ####
 run_func:
-    pushq	%rbp		#save the old frame pointer
-	movq	%rsp,	%rbp	#create the new frame pointer
+    #Frame pointer
+    pushq	%rbp		
+	movq	%rsp,%rbp	
     
-    jmp *.L50(,%rdi,8)
+    subq $50,%rdi
+    cmpq $10,%rdi
+    je .L20 #if we got 60 then convert to 50
+    jmp .L21 #continue to jump table logic
 
-.L51:
-    movq    $str1,%rdi  
+#### Jump Table Logic ####
+.L21:
+    cmpq $6,%rdi
+    ja .L11
+    jmp *.L40(,%rdi,8)
+
+.L20:
+    subq $10,%rdi
+    jmp .L21
+
+#### Jump Table Options ####
+.L50:
+    movq %rsi,%rdi
+    call pstrlen
+    movq %rax,%rsi
+    movq %rdx,%rdi
+    call pstrlen
+    movq %rax,%rdx
+    movq    $strplen,%rdi  
     movq	$0,%rax
     call    printf
     jmp .L11
 
 .L52:
-    movq    $str2,%rdi  
+    movq    $str1,%rdi  
     movq	$0,%rax
     call    printf
     jmp .L11
 
 .L53:
-    movq    $str3,%rdi  
+    movq    $str1,%rdi  
     movq	$0,%rax
     call    printf
     jmp .L11
 
+.L54:
+    movq    $str1,%rdi  
+    movq	$0,%rax
+    call    printf
+    jmp .L11
+
+.L55:
+    movq    $str1,%rdi  
+    movq	$0,%rax
+    call    printf
+    jmp .L11
+
+#### Function termination and return ####
 .L11:
-    movq	$0, %rax	#return value is zero (just like in c - we tell the OS that this program finished seccessfully)
-	movq	%rbp, %rsp	#restore the old stack pointer - release all used memory.
-	popq	%rbp		#restore old frame pointer (the caller function frame)
+    movq	$0,%rax	
+	movq	%rbp,%rsp	
+	popq	%rbp		
     ret
