@@ -36,7 +36,7 @@ pstrijcpy:
     jge .L6
     cmp %r11,%rcx
     jge .L6
-    cmp %r10,%r11 # check i > j
+    cmp %rdx,%rcx # check i > j
     jl .L6
 
     movq %rdx,%r10 # i counter
@@ -108,7 +108,7 @@ pstrijcmp:
     jge .L17
     cmp %r11,%rcx
     jge .L17
-    cmp %r10,%r11 # check i > j
+    cmp %rdx,%rcx # check i > j
     jl .L17
 
     movq %rdx,%r10 # i counter
@@ -133,8 +133,8 @@ pstrijcmp:
         jl .L19
         jmp .L14
     .L17:
-        movq $-2, %rax 
         movq $invalid,%rdi  
         movq $0,%rax
         call printf
+        movq $-2, %rax 
         ret
