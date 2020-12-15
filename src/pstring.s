@@ -24,7 +24,23 @@ replaceChar:
         jle .L1
     ret
 
+.globl pstrijcpy
+    .type pstrijcpy, @function
 pstrijcpy:
+
+    movq %rdx,%r10 # src counter
+    movq $1,%r11 # dest counter
+    .L3:
+        cmp %rbx,%r11
+        jle .L5
+    .L4:
+        ret
+    .L5:
+        movb (%rsi,%r10,1), %bpl
+        movb %bpl,(%rdi,%r11,1)
+        addq $1,%r10
+        addq $1,%r11
+        jmp .L3
 
 
 swapCase:
