@@ -1,5 +1,4 @@
 .section	.rodata	#read only data section
-str:	.string	"ere\n"
     
     .text
 .globl pstrlen
@@ -22,24 +21,37 @@ replaceChar:
     .L2:
         cmpq %r11,%r10
         jle .L1
+    movq %rdi, %rax
     ret
 
 .globl pstrijcpy
     .type pstrijcpy, @function
 pstrijcpy:
 
-    movq %rdx,%r10 # src counter
-    movq $1,%r11 # dest counter
+    # out of bounds check
+    movzbq (%rdi),%r10
+    movzbq (%rsi),%r11
+    cmp $0,%rdx # check i < 0
+    jl .L4
+    cmp %r10,%rcx # check j >= len
+    jge .L4
+    cmp %r11,%rcx
+    jge .L4
+    cmp %r10,%r11 # check i > j
+    jl .L4
+
+    movq %rdx,%r10 # i counter
+    movq %rcx,%r11 # j counter
     .L3:
-        cmp %rbx,%r11
+        cmp %r11,%r10
         jle .L5
     .L4:
+        movq %rdi, %rax
         ret
     .L5:
-        movb (%rsi,%r10,1), %bpl
-        movb %bpl,(%rdi,%r11,1)
         addq $1,%r10
-        addq $1,%r11
+        movb (%rsi,%r10,1), %bl
+        movb %bl,(%rdi,%r10,1)
         jmp .L3
 
 
