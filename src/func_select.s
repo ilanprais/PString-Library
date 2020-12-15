@@ -2,6 +2,7 @@
 str1:	.string	"l1\n"
 print:  .string "%d\n"
 strplen: .string "first pstring length: %d, second pstring length: %d\n"
+strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
 .L40:
     .quad .L50
     .quad .L11
@@ -48,7 +49,23 @@ run_func:
     jmp .L11
 
 .L52:
-    movq    $str1,%rdi  
+    movq %rdx, %r12
+    movq %rsi, %rdi
+    movq $97, %rsi
+    movq $98, %rdx
+    call replaceChar
+    movq %rdi, %rcx
+
+    movq %r12, %rdi
+    movq $97, %rsi
+    movq $98, %rdx
+    call replaceChar
+    movq %rdi, %r8
+
+    movq $97, %rsi
+    movq $98, %rdx
+    
+    movq    $strreplace,%rdi  
     movq	$0,%rax
     call    printf
     jmp .L11
