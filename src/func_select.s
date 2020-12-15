@@ -1,6 +1,7 @@
 .section	.rodata	#read only data section
 str1:	.string	"l1\n"
 print:  .string "%d\n"
+invalid: .string "invalid option!\n"
 strplen: .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
 strijcpy: .string "length: %d, string: %s\n"
@@ -23,13 +24,13 @@ run_func:
     
     subq $50,%rdi
     cmpq $10,%rdi
-    je .L20 #if we got 60 then convert to 50
-    jmp .L21 #continue to jump table logic
+    je .L20 # if we got 60 then convert to 50
+    jmp .L21 # continue to jump table logic
 
 #### Jump Table Logic ####
 .L21:
-    cmpq $6,%rdi
-    ja .L11
+    cmpq $6,%rdi # check option validity
+    ja .L12
     jmp *.L40(,%rdi,8)
 
 .L20:
@@ -110,6 +111,12 @@ run_func:
     movq	$0,%rax
     call    printf
     jmp .L11
+
+#### invalid option ####
+.L12:
+    movq    $invalid,%rdi  
+    movq	$0,%rax
+    call    printf
 
 #### Function termination and return ####
 .L11:
