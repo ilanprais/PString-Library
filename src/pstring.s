@@ -1,5 +1,5 @@
 .section	.rodata	#read only data section
-    
+invalid:  .string "invalid input!\n"
     .text
 .globl pstrlen
     .type pstrlen, @function
@@ -32,13 +32,13 @@ pstrijcpy:
     movzbq (%rdi),%r10
     movzbq (%rsi),%r11
     cmp $0,%rdx # check i < 0
-    jl .L4
+    jl .L6
     cmp %r10,%rcx # check j >= len
-    jge .L4
+    jge .L6
     cmp %r11,%rcx
-    jge .L4
+    jge .L6
     cmp %r10,%r11 # check i > j
-    jl .L4
+    jl .L6
 
     movq %rdx,%r10 # i counter
     movq %rcx,%r11 # j counter
@@ -53,9 +53,18 @@ pstrijcpy:
         movb (%rsi,%r10,1), %bl
         movb %bl,(%rdi,%r10,1)
         jmp .L3
+    .L6:
+        movq %rdi, %rbx
+        movq $invalid,%rdi  
+        movq $0,%rax
+        call printf
+        movq %rbx, %rdi
+        movq %rbx, %rax
+        ret
 
 
 swapCase:
+
 
 
 pstrijcmp:
