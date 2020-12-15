@@ -86,9 +86,23 @@ run_func:
     jmp .L11
 
 .L54:
-    movq    $str1,%rdi  
-    movq	$0,%rax
-    call    printf
+    movq %rdx,%r12 # saving 3rd argument for later
+    movq %rsi,%rdi
+    call swapCase
+    movq %rdi,%rdx
+    movzbq (%rdi),%rsi
+    movq $strijcpy,%rdi  
+    movq $0,%rax
+    call printf
+
+    movq %r12,%rdi
+    call swapCase
+    movq %rdi,%rdx
+    movzbq (%rdi),%rsi
+    movq $strijcpy,%rdi  
+    movq $0,%rax
+    call printf
+
     jmp .L11
 
 .L55:
