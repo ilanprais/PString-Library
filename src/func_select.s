@@ -5,6 +5,7 @@ invalid: .string "invalid option!\n"
 strplen: .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
 strijcpy: .string "length: %d, string: %s\n"
+strcmp: .string "compare result: %d\n"
 .L40:
     .quad .L50
     .quad .L11
@@ -107,9 +108,15 @@ run_func:
     jmp .L11
 
 .L55:
-    movq    $str1,%rdi  
-    movq	$0,%rax
-    call    printf
+    movq %rsi,%rdi
+    movq %rdx,%rsi
+    movq $0, %rdx
+    movq $2, %rcx
+    call pstrijcmp
+    movq %rax,%rsi
+    movq $strcmp,%rdi  
+    movq $0,%rax
+    call printf
     jmp .L11
 
 #### invalid option ####
