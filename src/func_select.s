@@ -75,11 +75,11 @@ run_func:
     movq %rsi,%rdi
     movq %rdx,%rsi
     movq $1,%rdx
-    movq $2,%rcx
+    movq $3,%rcx
     call pstrijcpy
-    call strplen
+    movzbq (%rdi),%r12
     movq %rdi,%rdx
-    movq %rax,%rsi
+    movq %r12,%rsi
     movq $strijcpy,%rdi  
     movq $0,%rax
     call printf
