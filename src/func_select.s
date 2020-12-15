@@ -3,6 +3,7 @@ str1:	.string	"l1\n"
 print:  .string "%d\n"
 strplen: .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
+strijcpy: .string "length: %d, string: %s\n"
 .L40:
     .quad .L50
     .quad .L11
@@ -51,19 +52,19 @@ run_func:
 .L52:
     movq %rdx, %r12
     movq %rsi, %rdi
-    movq $97, %rsi
-    movq $98, %rdx
+    movq $98, %rsi
+    movq $99, %rdx
     call replaceChar
     movq %rdi, %rcx
 
     movq %r12, %rdi
-    movq $97, %rsi
-    movq $98, %rdx
+    movq $98, %rsi
+    movq $99, %rdx
     call replaceChar
     movq %rdi, %r8
 
-    movq $97, %rsi
-    movq $98, %rdx
+    movq $98, %rsi
+    movq $99, %rdx
     
     movq    $strreplace,%rdi  
     movq	$0,%rax
@@ -71,9 +72,17 @@ run_func:
     jmp .L11
 
 .L53:
-    movq    $str1,%rdi  
-    movq	$0,%rax
-    call    printf
+    movq %rsi,%rdi
+    movq %rdx,%rsi
+    movq $1,%rdx
+    movq $2,%rcx
+    call pstrijcpy
+    call strplen
+    movq %rdi,%rdx
+    movq %rax,%rsi
+    movq $strijcpy,%rdi  
+    movq $0,%rax
+    call printf
     jmp .L11
 
 .L54:
