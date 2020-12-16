@@ -23,165 +23,165 @@ run_func:
     pushq	%rbp		
 	movq	%rsp,%rbp	
     
-    subq $50,%rdi
-    cmpq $10,%rdi
-    je .L20 # if we got 60 then convert to 50
-    jmp .L21 # continue to jump table logic
+    subq    $50,%rdi
+    cmpq    $10,%rdi
+    je      .L20    # if we got 60 then convert to 50
+    jmp     .L21    # continue to jump table logic
 
 #### Jump Table Logic ####
 .L21:
-    cmpq $6,%rdi # check option validity
-    ja .L12
-    jmp *.L40(,%rdi,8)
+    cmpq    $6,%rdi # check option validity
+    ja      .L12
+    jmp     *.L40(,%rdi,8)
 
 .L20:
-    subq $10,%rdi
-    jmp .L21
+    subq    $10,%rdi
+    jmp     .L21
 
 #### Jump Table Options ####
 .L50:
-    movq %rsi,%rdi
-    call pstrlen
-    movq %rax,%rsi
-    movq %rdx,%rdi
-    call pstrlen
-    movq %rax,%rdx
+    movq    %rsi,%rdi
+    call    pstrlen
+    movq    %rax,%rsi
+    movq    %rdx,%rdi
+    call    pstrlen
+    movq    %rax,%rdx
     movq    $strplen,%rdi  
     movq	$0,%rax
     call    printf
-    jmp .L11
+    jmp     .L11
 
 .L52:
-    movq %rsi,%r13
-    movq %rdx, %r12
+    movq    %rsi,%r13
+    movq    %rdx, %r12
 
     # first input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstr, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r14
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstr, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r14
 
     # second input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstr, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r15
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstr, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r15
 
-    movq %r13, %rdi
-    movq %r14, %rsi
-    movq %r15, %rdx
-    call replaceChar
-    movq %rdi, %rcx
+    movq    %r13, %rdi
+    movq    %r14, %rsi
+    movq    %r15, %rdx
+    call    replaceChar
+    movq    %rdi, %rcx
 
-    movq %r12, %rdi
-    movq %r14, %rsi
-    movq %r15, %rdx
-    call replaceChar
-    movq %rdi, %r8
+    movq    %r12, %rdi
+    movq    %r14, %rsi
+    movq    %r15, %rdx
+    call    replaceChar
+    movq    %rdi, %r8
 
-    movq %r14, %rsi
-    movq %r15, %rdx
+    movq    %r14, %rsi
+    movq    %r15, %rdx
     
     movq    $strreplace,%rdi  
     movq	$0,%rax
     call    printf
-    jmp .L11
+    jmp     .L11
 
 .L53:
-    movq %rsi,%r12
-    movq %rdx, %r13
+    movq    %rsi,%r12
+    movq    %rdx, %r13
 
     # first input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstrint, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r14
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstrint, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r14
 
     # second input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstrint, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r15
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstrint, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r15
 
-    movq %r12,%rdi
-    movq %r13,%rsi
-    movq %r14,%rdx
-    movq %r15,%rcx
-    call pstrijcpy
+    movq    %r12,%rdi
+    movq    %r13,%rsi
+    movq    %r14,%rdx
+    movq    %r15,%rcx
+    call    pstrijcpy
 
-    movzbq (%rdi),%r12
-    movq %rdi,%rdx
-    movq %r12,%rsi
-    movq $strijcpy,%rdi  
-    movq $0,%rax
-    call printf
+    movzbq  (%rdi),%r12
+    movq    %rdi,%rdx
+    movq    %r12,%rsi
+    movq    $strijcpy,%rdi  
+    movq    $0,%rax
+    call    printf
 
-    movzbq (%r13),%r12
-    movq %r13,%rdx
-    movq %r12,%rsi
-    movq $strijcpy,%rdi  
-    movq $0,%rax
-    call printf
-    jmp .L11
+    movzbq  (%r13),%r12
+    movq    %r13,%rdx
+    movq    %r12,%rsi
+    movq    $strijcpy,%rdi  
+    movq    $0,%rax
+    call    printf
+    jmp     .L11
 
 .L54:
-    movq %rdx,%r12 # saving 3rd argument for later
-    movq %rsi,%rdi
-    call swapCase
-    movq %rdi,%rdx
-    movzbq (%rdi),%rsi
-    movq $strijcpy,%rdi  
-    movq $0,%rax
-    call printf
+    movq    %rdx,%r12   # saving 3rd argument for later
+    movq    %rsi,%rdi
+    call    swapCase
+    movq    %rdi,%rdx
+    movzbq  (%rdi),%rsi
+    movq    $strijcpy,%rdi  
+    movq    $0,%rax
+    call    printf
 
-    movq %r12,%rdi
-    call swapCase
-    movq %rdi,%rdx
-    movzbq (%rdi),%rsi
-    movq $strijcpy,%rdi  
-    movq $0,%rax
-    call printf
+    movq    %r12,%rdi
+    call    swapCase
+    movq    %rdi,%rdx
+    movzbq  (%rdi),%rsi
+    movq    $strijcpy,%rdi  
+    movq    $0,%rax
+    call    printf
 
-    jmp .L11
+    jmp     .L11
 
 .L55:
-    movq %rsi,%r12
-    movq %rdx, %r13
+    movq    %rsi,%r12
+    movq    %rdx, %r13
 
     # first input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstrint, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r14
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstrint, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r14
 
     # second input
-    subq $16, %rsp
-    movq %rsp,%rsi
-    movq $inputstrint, %rdi
-    movq $0,%rax
-    call scanf
-    movzbq (%rsp),%r15
+    subq    $16, %rsp
+    movq    %rsp,%rsi
+    movq    $inputstrint, %rdi
+    movq    $0,%rax
+    call    scanf
+    movzbq  (%rsp),%r15
 
-    movq %r12,%rdi
-    movq %r13,%rsi
-    movq %r14, %rdx
-    movq %r15, %rcx
-    call pstrijcmp
-    movq %rax,%rsi
-    movq $strcmp,%rdi  
-    movq $0,%rax
-    call printf
-    jmp .L11
+    movq    %r12,%rdi
+    movq    %r13,%rsi
+    movq    %r14, %rdx
+    movq    %r15, %rcx
+    call    pstrijcmp
+    movq    %rax,%rsi
+    movq    $strcmp,%rdi  
+    movq    $0,%rax
+    call    printf
+    jmp     .L11
 
 #### invalid option ####
 .L12:
