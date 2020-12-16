@@ -1,6 +1,4 @@
 .section	.rodata	#read only data section
-str1:	.string	"l1\n"
-print:  .string "%d\n"
 invalid: .string "invalid option!\n"
 strplen: .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
@@ -196,9 +194,4 @@ run_func:
     movq	$0,%rax	
 	movq	%rbp,%rsp	
 	popq	%rbp		
-    ret
-
-.globl br
-    .type br, @function
-br:
     ret
