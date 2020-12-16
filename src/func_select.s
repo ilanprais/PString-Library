@@ -90,9 +90,13 @@ run_func:
     call    replaceChar
     movq    %rdi, %r8
 
-    # move strings to parameters and print
+    # move chars to parameters and print
     movq    %r14, %rsi
     movq    %r15, %rdx
+
+    # point to strings (without length at the beginning)
+    addq    $1, %rcx
+    addq    $1, %r8
     
     movq    $strreplace,%rdi  
     movq	$0,%rax
@@ -120,7 +124,7 @@ run_func:
     call    scanf
     movzbq  (%rsp),%r15
 
-    # move to function parameters and call strigcpy
+    # move to function parameters and call strijcpy
     movq    %r12,%rdi
     movq    %r13,%rsi
     movq    %r14,%rdx
@@ -130,6 +134,7 @@ run_func:
     # move to printf parameters and print first string
     movzbq  (%rdi),%r12
     movq    %rdi,%rdx
+    addq    $1,%rdx
     movq    %r12,%rsi
     movq    $strijcpy,%rdi  
     movq    $0,%rax
@@ -138,6 +143,7 @@ run_func:
     # move to printf parameters and print second string
     movzbq  (%r13),%r12
     movq    %r13,%rdx
+    addq    $1,%rdx
     movq    %r12,%rsi
     movq    $strijcpy,%rdi  
     movq    $0,%rax
@@ -152,6 +158,7 @@ run_func:
 
     # Printing result
     movq    %rdi,%rdx
+    addq    $1,%rdx
     movzbq  (%rdi),%rsi
     movq    $strijcpy,%rdi  
     movq    $0,%rax
@@ -163,6 +170,7 @@ run_func:
 
     # Printing result
     movq    %rdi,%rdx
+    addq    $1,%rdx
     movzbq  (%rdi),%rsi
     movq    $strijcpy,%rdi  
     movq    $0,%rax
