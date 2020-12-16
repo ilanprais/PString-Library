@@ -1,6 +1,7 @@
     .section	.rodata	#read only data section
 inputstrint: .string "%d"
 inputstr:    .string "%s"
+# The main code section #
     .text
 
     .globl run_main
