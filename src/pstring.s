@@ -78,6 +78,7 @@ swapCase:
     cmp     %r11,%r10
     jle     .L9
     .L8: # termination and return
+    movq    %rdi, %rax
     ret
     .L9: # main loop body
     addq    $1,%r10 # increase counter
