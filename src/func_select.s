@@ -22,7 +22,7 @@ inputstrint:.string "%d"
 run_func:
     # Frame pointer
     pushq	%rbp		
-	movq    %rsp,%rbp	
+    movq    %rsp,%rbp	
     
     subq    $50,%rdi    # manipulation input to be between 1 and 10
     cmpq    $10,%rdi    # if 60 (60 - 50 = 10) 
