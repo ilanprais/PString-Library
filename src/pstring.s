@@ -1,6 +1,7 @@
 .section	.rodata	#read only data section
-invalid:  .string "invalid input!\n"
+invalid:    .string "invalid input!\n"
     .text
+    
 .globl pstrlen
     .type pstrlen, @function
 pstrlen:

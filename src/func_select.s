@@ -1,11 +1,11 @@
 .section	.rodata	#read only data section
-invalid: .string "invalid option!\n"
-strplen: .string "first pstring length: %d, second pstring length: %d\n"
+invalid:    .string "invalid option!\n"
+strplen:    .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
-strijcpy: .string "length: %d, string: %s\n"
-strcmp: .string "compare result: %d\n"
-inputstr: .string " %c"
-inputstrint: .string "%d"
+strijcpy:   .string "length: %d, string: %s\n"
+strcmp:     .string "compare result: %d\n"
+inputstr:   .string " %c"
+inputstrint:.string "%d"
 .L40:
     .quad .L50
     .quad .L11
