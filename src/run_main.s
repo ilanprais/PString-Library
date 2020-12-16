@@ -9,7 +9,7 @@ inputstr:    .string "%s"
 run_main:
     # Frame pointer
     pushq   %rbp		
-	movq	%rsp,%rbp	
+    movq	%rsp,%rbp	
 
     # First pstring input
     subq    $256,%rsp   # Allocating memory for the struct
@@ -59,7 +59,7 @@ run_main:
 
     # stack frame reset and return
     movq    $0,%rax	
-	movq    %rbp,%rsp	
-	popq    %rbp	
+    movq    %rbp,%rsp	
+    popq    %rbp	
     ret
     
