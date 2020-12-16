@@ -24,32 +24,32 @@ run_func:
     pushq	%rbp		
 	movq	%rsp,%rbp	
     
-    subq    $50,%rdi # manipulation input to be between 1 and 10
-    cmpq    $10,%rdi # if 60 (60 - 50 = 10) 
-    je      .L20    # if we got 60 then convert to 50
-    jmp     .L21    # continue to jump table logic
+    subq    $50,%rdi    # manipulation input to be between 1 and 10
+    cmpq    $10,%rdi    # if 60 (60 - 50 = 10) 
+    je      .L20        # if we got 60 then convert to 50
+    jmp     .L21        # continue to jump table logic
 
 # Jump Table Logic #
 .L21:
-    cmpq    $6,%rdi # check option validity
+    cmpq    $6,%rdi     # check option validity
     ja      .L12
     jmp     *.L40(,%rdi,8) # jump to label according to jump table
 
 .L20:
-    subq    $10,%rdi # subtract 10 if neccesary (when input is 60)
+    subq    $10,%rdi    # subtract 10 if neccesary (when input is 60)
     jmp     .L21
 
 # Jump Table Options #
 # Calculate string length #
 .L50:
     # first string
-    movq    %rsi,%rdi # move pstring as first parameter
+    movq    %rsi,%rdi   # move pstring as first parameter
     call    pstrlen
-    movq    %rax,%rsi # save in rsi
+    movq    %rax,%rsi   # save in rsi
     # second string
     movq    %rdx,%rdi
     call    pstrlen
-    movq    %rax,%rdx # save in rdx
+    movq    %rax,%rdx   # save in rdx
     movq    $strplen,%rdi  
     movq	$0,%rax
     call    printf
@@ -57,8 +57,8 @@ run_func:
 
 # Replace char #
 .L52:
-    movq    %rsi,%r13 # save first pstring for later
-    movq    %rdx, %r12 # save second pstring for later
+    movq    %rsi,%r13   # save first pstring for later
+    movq    %rdx, %r12  # save second pstring for later
 
     # first input
     subq    $16, %rsp
@@ -101,8 +101,8 @@ run_func:
 
 # Copy i to j #
 .L53:
-    movq   %rsi,%r12 # save first pstring for later
-    movq   %rdx,%r13 # save second pstring for later
+    movq   %rsi,%r12    # save first pstring for later
+    movq   %rdx,%r13    # save second pstring for later
 
     # first input - i
     subq    $16, %rsp
@@ -172,8 +172,8 @@ run_func:
 
 # Compare pstrings between i and j #
 .L55:
-    movq   %rsi,%r12 # save first pstring for later
-    movq   %rdx,%r13 # save second pstring for later
+    movq   %rsi,%r12    # save first pstring for later
+    movq   %rdx,%r13    # save second pstring for later
 
     # first input - i
     subq    $16, %rsp
@@ -189,7 +189,7 @@ run_func:
     movq    $inputstrint, %rdi
     movq    $0,%rax
     call    scanf
-    movzbq  (%rsp),%r15  # Saving j at $r15
+    movzbq  (%rsp),%r15 # Saving j at $r15
 
     # moving pstrings,i and j to parameters and calling the function
     movq    %r12,%rdi
