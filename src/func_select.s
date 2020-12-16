@@ -155,10 +155,29 @@ run_func:
     jmp .L11
 
 .L55:
-    movq %rsi,%rdi
-    movq %rdx,%rsi
-    movq $0, %rdx
-    movq $2, %rcx
+    movq %rsi,%r12
+    movq %rdx, %r13
+
+    # first input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstrint, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r14
+
+    # second input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstrint, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r15
+
+    movq %r12,%rdi
+    movq %r13,%rsi
+    movq %r14, %rdx
+    movq %r15, %rcx
     call pstrijcmp
     movq %rax,%rsi
     movq $strcmp,%rdi  
