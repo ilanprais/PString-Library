@@ -122,26 +122,27 @@ pstrijcmp:
 
     movq    %rdx,%r10 # i counter
     movq    %rcx,%r11 # j counter
-    .L14:
+    # loop
+    .L14: # loop termination check (check if i reached j)
     cmp     %r11,%r10
     jle     .L16
-    .L15:
+    .L15: # termination and return (if reached end, return 0 because equal)
     movq    $0, %rax 
     ret
-    .L18:
+    .L18: # termination and return (if str1 > str2)
     movq    $1, %rax
     ret
-    .L19:
+    .L19: # termination and return (if str1 < str2)
     movq    $-1, %rax
     ret
-    .L16:
-    addq    $1,%r10
-    movb    (%rsi,%r10,1), %bl
-    cmp     %bl,(%rdi,%r10,1)
+    .L16: # main loop body
+    addq    $1,%r10 # increase counter
+    movb    (%rsi,%r10,1), %bl # get current char
+    cmp     %bl,(%rdi,%r10,1) # compare and jump accordingly
     jg      .L18
     jl      .L19
-    jmp     .L14
-    .L17:
+    jmp     .L14 # characters are equal, move to next characters
+    .L17: # invalid message and termination (from bound check)
     movq    $invalid,%rdi  
     movq    $0,%rax
     call    printf
