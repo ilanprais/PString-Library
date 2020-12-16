@@ -58,8 +58,8 @@ run_main:
     call    run_func    # calling the option jump table
 
     # stack frame reset and return
-    movq	$0,%rax	
-	movq	%rbp,%rsp	
-	popq	%rbp	
+    movq    $0,%rax	
+	movq    %rbp,%rsp	
+	popq    %rbp	
     ret
     
