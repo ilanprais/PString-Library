@@ -6,6 +6,8 @@ strplen: .string "first pstring length: %d, second pstring length: %d\n"
 strreplace: .string "old char: %c, new char: %c, first string: %s, second string: %s\n"
 strijcpy: .string "length: %d, string: %s\n"
 strcmp: .string "compare result: %d\n"
+inputstr: .string " %c"
+inputstrint: .string "%d"
 .L40:
     .quad .L50
     .quad .L11
@@ -52,21 +54,39 @@ run_func:
     jmp .L11
 
 .L52:
+    movq %rsi,%r13
     movq %rdx, %r12
-    movq %rsi, %rdi
-    movq $98, %rsi
-    movq $99, %rdx
+
+    # first input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstr, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r14
+
+    # second input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstr, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r15
+
+    movq %r13, %rdi
+    movq %r14, %rsi
+    movq %r15, %rdx
     call replaceChar
     movq %rdi, %rcx
 
     movq %r12, %rdi
-    movq $98, %rsi
-    movq $99, %rdx
+    movq %r14, %rsi
+    movq %r15, %rdx
     call replaceChar
     movq %rdi, %r8
 
-    movq $98, %rsi
-    movq $99, %rdx
+    movq %r14, %rsi
+    movq %r15, %rdx
     
     movq    $strreplace,%rdi  
     movq	$0,%rax
@@ -74,13 +94,40 @@ run_func:
     jmp .L11
 
 .L53:
-    movq %rsi,%rdi
-    movq %rdx,%rsi
-    movq $1,%rdx
-    movq $3,%rcx
+    movq %rsi,%r12
+    movq %rdx, %r13
+
+    # first input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstrint, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r14
+
+    # second input
+    subq $16, %rsp
+    movq %rsp,%rsi
+    movq $inputstrint, %rdi
+    movq $0,%rax
+    call scanf
+    movzbq (%rsp),%r15
+
+    movq %r12,%rdi
+    movq %r13,%rsi
+    movq %r14,%rdx
+    movq %r15,%rcx
     call pstrijcpy
+
     movzbq (%rdi),%r12
     movq %rdi,%rdx
+    movq %r12,%rsi
+    movq $strijcpy,%rdi  
+    movq $0,%rax
+    call printf
+
+    movzbq (%r13),%r12
+    movq %r13,%rdx
     movq %r12,%rsi
     movq $strijcpy,%rdi  
     movq $0,%rax
@@ -130,4 +177,9 @@ run_func:
     movq	$0,%rax	
 	movq	%rbp,%rsp	
 	popq	%rbp		
+    ret
+
+.globl br
+    .type br, @function
+br:
     ret
